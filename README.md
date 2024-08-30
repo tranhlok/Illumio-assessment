@@ -12,6 +12,48 @@ This project implements a Flow Log Analyzer that parses AWS VPC Flow Log data an
 - Handles large log files efficiently.
 - Provides logging for process tracking and error handling.
 
+## Requirements
+
+- Python 3.7+ (Python version used to create this program).
+- CSV module (built-in).
+- Logging module (built-in).
+
+## Installation
+No special installation is required beyond having Python 3.7+ installed per requested by the assignment prompt. For this reason, no `requirements.txt` is needed to run the program.
+## Usage
+Navigate to the main folder, which is the same folder that this readme file is located.
+
+Run the Flow Log Analyzer from the command line :
+```bash
+python src/flow_log_analyzer.py <log_file> <lookup_table_file> <output_file>
+```
+Where:
+- `<log_file>` is the path to the AWS VPC Flow Log file
+- `<lookup_table_file>` is the path to the CSV file containing the lookup table
+- `<output_file>` is the path where the analysis results will be written
+
+Sample run command
+```bash
+python src/flow_log_analyzer.py data/flow_logs.txt data/lookup_table.csv src/analysis_results.txt
+```
+
+## Input File Formats
+
+### Flow Log File
+
+The flow log file should be in the AWS VPC Flow Logs default format (version 2). Each line represents a flow log entry with space-separated fields. The available fields can be found in [Flow Logs Data Fields](#flow-logs-data-fields).
+
+### Lookup Table File
+
+The lookup table should be a CSV file with the following columns: `dstport`, `protocol`, `tag`.
+
+## Output
+
+The analyzer generates an output file containing:
+-  `Tag Counts`: A count of matches for each tag.
+-  `Port/Protocol Combination Counts`: A count of matches for each port/protocol combination.
+
+
 ## Design Choices and Data Structures
 
 ### Assumtions
@@ -66,45 +108,6 @@ Comprehensive error handling and logging are implemented to:
 - Log progress and warnings for exceptions.
 - Provide informative error messages for debugging.
 
-## Requirements
-
-- Python 3.7+ (Python version used to create this program).
-- CSV module (built-in).
-- Logging module (built-in).
-
-## Installation
-No special installation is required beyond having Python 3.7+ installed per requested by the assignment prompt. For this reason, no `requirements.txt` is needed to run the program.
-## Usage
-Navigate to the main folder, which is the same folder that this readme file is located.
-
-Run the Flow Log Analyzer from the command line :
-```bash
-python src/flow_log_analyzer.py <log_file> <lookup_table_file> <output_file>
-```
-Where:
-- `<log_file>` is the path to the AWS VPC Flow Log file
-- `<lookup_table_file>` is the path to the CSV file containing the lookup table
-- `<output_file>` is the path where the analysis results will be written
-
-Sample run command
-```bash
-python src/flow_log_analyzer.py data/flow_logs.txt data/lookup_table.csv src/analysis_results.txt
-```
-## Input File Formats
-
-### Flow Log File
-
-The flow log file should be in the AWS VPC Flow Logs default format (version 2). Each line represents a flow log entry with space-separated fields. The available fields can be found in [Flow Logs Data Fields](#flow-logs-data-fields).
-
-### Lookup Table File
-
-The lookup table should be a CSV file with the following columns: `dstport`, `protocol`, `tag`.
-
-## Output
-
-The analyzer generates an output file containing:
--  `Tag Counts`: A count of matches for each tag.
--  `Port/Protocol Combination Counts`: A count of matches for each port/protocol combination.
 
 ## Flow Logs Data Fields
 Flow log records default log format (only version 2) details from [`this AWS doc`](https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html):
